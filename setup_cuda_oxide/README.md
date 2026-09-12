@@ -32,7 +32,7 @@ On first `devcontainer up` it will build the container. Once it's up
 ```
 kicks off the container. 
 
-Note on Permissions: It's possible that there are permission issues. If you are local system, rather than a server with many user, `chmod -R ugo+rw ./cuda-oxide/` is an quickfix, albeit insecure. A better solution is using raw `docker`: doing `devcontainer up`, transpiles `.devcontainer/devcontainer.json` configuration into a series of standard low-level docker commands. The permission issue arises from the user not getting mapped correctly inside the container under rootless `docker`. This can be manually forced using `-i 0:0`,
+Note on Permissions: It's possible that there are permission issues. If you are local system, rather than a server with many user, `chmod -R ugo+rw ./cuda-oxide/` is an quickfix, albeit insecure. A better solution is using raw `docker`: doing `devcontainer up`, transpiles `.devcontainer/devcontainer.json` configuration into a series of standard low-level docker commands. The permission issue arises from the user not getting mapped correctly inside the container under rootless `docker`. This can be manually forced using `-u 0:0`,
 ```bash
   container_id=$(docker ps -q --filter "label=devcontainer.local_folder=$(pwd)")
   docker exec -it -u 0:0 "$container_id" "$@"
@@ -43,4 +43,5 @@ To kick off with vecadd
     devcontainer exec --workspace-folder . cargo oxide run vecadd
 ```
 Aliasing `devcontainer` with `alias cargo-cuda="devcontainer exec --workspace-folder . cargo"` improves the ergonomics. 
+
 
